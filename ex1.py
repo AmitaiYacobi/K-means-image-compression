@@ -33,6 +33,8 @@ def cluster(pixels, centroids):
 def move_centroids(clusters, centroids):
     # update each centroid according to the avarage of its cluster
     for i in range(len(clusters)):
+        if len(clusters[i]) == 0:
+            continue
         average = np.average(clusters[i], axis=0)
         centroids[i] = centroids[i].round(4)
         average = average.round(4)
@@ -48,10 +50,13 @@ def Kmeans():
     pixels = orig_pixels.astype(float) / 255.
     pixels = pixels.reshape(-1, 3)
     output_file = open(out_fname, "w")
+    #centroids = np.random.rand(16, 3)
+    print(centroids)
     prev_centroids = centroids.copy()
     costs = []
     iterations = []
     iteration = 0
+
     while iteration < 20:
         iterations.append(iteration)
         clusters = cluster(pixels, centroids)
@@ -67,8 +72,8 @@ def Kmeans():
             prev_centroids = centroids.copy()
             iteration += 1
 
-    # plt.plot(iterations, costs)
-    # plt.savefig("ex1")
+    plt.plot(iterations, costs)
+    plt.savefig("k=3")
 
 
 if __name__ == "__main__":
