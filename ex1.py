@@ -10,11 +10,20 @@ pixels = orig_pixels.astype(float) / 255.
 pixels = pixels.reshape(-1, 3)
 
 
+def calculate_cost(clusters, centroids):
+    distances = []
+    for i in range(len(clusters)):
+        for pixel in clusters[i]:
+            distance = np.linalg.norm(pixel - centroids[i])
+            distances.append(distance)
+    #print(distances)
+    return np.average(distances, axis=0)
+
+
 def Kmeans():
     output_file = open(out_fname, "w")
     iteration = 0
     prev_centroids = centroids.copy()
-
     while iteration < 20:
         counter = 0
         clusters = [[] for centroid in centroids]
@@ -37,6 +46,9 @@ def Kmeans():
             centroids[i] = centroids[i].round(4)
             average = average.round(4)
             centroids[i] = average.copy()
+
+        cost = calculate_cost(clusters, centroids)
+        print(cost)
 
         output_file.write(
             f"[iter {iteration}]:{','.join([str(i.round(4)) for i in centroids])}\n"
