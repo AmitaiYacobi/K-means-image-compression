@@ -51,7 +51,6 @@ def Kmeans():
     pixels = pixels.reshape(-1, 3)
     output_file = open(out_fname, "w")
     #centroids = np.random.rand(16, 3)
-    print(centroids)
     prev_centroids = centroids.copy()
     costs = []
     iterations = []
@@ -72,8 +71,8 @@ def Kmeans():
             prev_centroids = centroids.copy()
             iteration += 1
 
-    plt.plot(iterations, costs)
-    plt.savefig("k=3")
+    # plt.plot(iterations, costs)
+    # plt.savefig("k=3")
 
 
 if __name__ == "__main__":
