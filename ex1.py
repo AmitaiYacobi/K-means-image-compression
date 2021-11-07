@@ -8,9 +8,8 @@ def calculate_cost(clusters, centroids):
     distances = []
     for i in range(len(clusters)):
         for pixel in clusters[i]:
-            distance = np.linalg.norm(pixel - centroids[i])
+            distance = (np.linalg.norm(pixel - centroids[i]))**2
             distances.append(distance)
-    #print(distances)
     return np.average(distances, axis=0)
 
 
@@ -50,7 +49,7 @@ def Kmeans():
     pixels = orig_pixels.astype(float) / 255.
     pixels = pixels.reshape(-1, 3)
     output_file = open(out_fname, "w")
-    #centroids = np.random.rand(16, 3)
+    #centroids = np.random.uniform(low=0.0, high=1.0, size=(16, 3))
     prev_centroids = centroids.copy()
     costs = []
     iterations = []
@@ -71,8 +70,8 @@ def Kmeans():
             prev_centroids = centroids.copy()
             iteration += 1
 
-    # plt.plot(iterations, costs)
-    # plt.savefig("k=3")
+    #plt.plot(iterations, costs)
+    #plt.savefig("k=16")
 
 
 if __name__ == "__main__":
